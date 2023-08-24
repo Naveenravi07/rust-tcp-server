@@ -78,3 +78,23 @@ impl Drop for ThreadPool {
         }
     }
 }
+
+
+mod tests{
+    #![allow(dead_code,unused)]
+    use super::*;
+
+    #[test]
+    fn create_threadpool(){
+        let pool = ThreadPool::new(4);
+        assert_eq!(4,pool.workers.len());
+        assert_eq!(pool.sender.is_some(),true);
+    }
+
+    #[test]
+    #[should_panic(expected = "assertion failed: count > 0")]
+    fn test_new_thread_pool_invalid_count() {
+        ThreadPool::new(0);
+    }
+
+}
